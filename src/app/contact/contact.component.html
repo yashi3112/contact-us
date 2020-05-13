@@ -1,1 +1,6 @@
-<p>contact works!</p>
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+    <input type="text" name="firstName" formControlName="firstName">
+    <input type="text" name="lastName" formControlName="lastName">
+
+    <button type="submit" [disabled]="contactForm.invalid">Submit</button>
+</form>
