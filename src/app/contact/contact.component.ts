@@ -16,7 +16,7 @@ export class ContactComponent implements OnInit {
     this.contactForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
       phone: new FormControl('', [Validators.required,Validators.pattern('^[0-9]+$')]),
-      email: new FormControl('', [Validators.required]),
+      email: new FormControl('', [Validators.required,Validators.email]),
       subject: new FormControl('', [Validators.required]),
       message: new FormControl('', [Validators.required]),
       agree: new FormControl('', [this.mustBeChecked])
@@ -35,6 +35,11 @@ export class ContactComponent implements OnInit {
       return {mustBeCheckedError: 'Must be checked'};
     }
     return null;
+  }
+  checkError(fieldName)
+  {
+    const control= this.contactForm.get(fieldName);
+    return control.errors && control.touched; 
   }
 
 }
