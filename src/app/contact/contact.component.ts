@@ -8,19 +8,33 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class ContactComponent implements OnInit {
 
-  contactForm:FormGroup;
+  alertMsg:boolean;
+  contactForm: FormGroup;
   constructor() { }
 
   ngOnInit(): void {
-    this.contactForm= new FormGroup({
-      firstName:new FormControl('ABc',[Validators.required]),
-      lastName:new FormControl('xyz',[Validators.required])
+    this.contactForm = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      phone: new FormControl('', [Validators.required,Validators.pattern('^[0-9]+$')]),
+      email: new FormControl('', [Validators.required]),
+      subject: new FormControl('', [Validators.required]),
+      message: new FormControl('', [Validators.required]),
+      agree: new FormControl('', [this.mustBeChecked])
     });
-  } 
+  }
 
-  onSubmit()
-  {
+  onSubmit() {
     console.log(this.contactForm.value);
+    this.contactForm.reset();
+    this.alertMsg=true;
+   
+  }
+  mustBeChecked(control: FormControl): {[key: string]: string} {
+    
+    if (!control.value) {
+      return {mustBeCheckedError: 'Must be checked'};
+    }
+    return null;
   }
 
 }
